@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, CreateView
 from api import DataAPI
 from datetime import datetime
 import dateutil.parser
-
+from django.utils import timezone
 from quotes.models import Comments
 
 
@@ -18,9 +18,8 @@ class IndexPage(TemplateView):
         context = super(IndexPage, self).get_context_data(**kwargs)
         content_api = DataAPI()
         context['first_article'] = content_api.get_article_with_tag('10-promise')
-        context['random_articles'] = content_api.get_random_articles()
+        context['random_articles'] = content_api.get_random_articles(num_articles=3)
         context['title'] = context['first_article']['headline']
-        print context['title']
         return context
 
 
@@ -34,8 +33,9 @@ class Article(TemplateView):
         context['article'] = content_api.get_article_by_slug(self.kwargs['slug'])
         context['quotes'] = content_api.quotes_api()[0:3]
         context['title'] = context['article']['headline']
-        context['comments'] = Comments.objects.filter(slug=context['article']['slug'])
+        context['comments'] = Comments.objects.filter(slug=context['article']['slug']).order_by('-created_at')[:10]
         context['related_articles'] = content_api.get_random_articles(num_articles=5)
+        context['time_now'] = timezone.now()
         return context
 
 
@@ -50,5 +50,5 @@ class CreateComment(CreateView):
             comment.save()
         return HttpResponse(json.dumps({
             'success': True,
-            'html': render_to_string('parts/comment.html', {'comment': comment})}),
+            'html': render_to_string('parts/comment.html', {'comment': comment, 'time_now': comment.created_at})}),
             content_type='application/json')

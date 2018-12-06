@@ -1,20 +1,37 @@
-    <form method="post" id="comment-form" action="{% url 'create_comment' slug=article.slug %}">
-                        {% csrf_token %}
-                        <input type="hidden" value="{{article.slug}}" name="slug"/>
-                        <input type="text" name="username"><textarea name="comment"></textarea>
-                        <button type="submit" class="btn btn-primary">Submit Comment</button>
-                    </form>
-                    <script>
-                        $(function () {
-                            $("#comment-form").submit(function () {
-                                debugger;
-
-                                var data = $(this).serialize();
-                                $.post($(this).attr('action'), data, function (response) {
-                                    console.log(response);
-                                    $("#comments").append(response.html);
-                                })
-                                return false;
-                            })
-                        })
-                    </script>
+<form method="post" id="comment-form" action="{% url 'create_comment' slug=article.slug %}" class="form-horizontal">
+    {% csrf_token %}
+    <input type="hidden" value="{{article.slug}}" name="slug"/>
+    <div class="form-group">
+        <label for="inputUsername" class="col-sm-2 control-label">Username
+            <small> (optional)</small>
+        </label>
+        <div class="col-sm-10"><input type="text" name="username" id="inputUsername" class="form-control"></div>
+    </div>
+    <div class="form-group">
+        <label for="inputComment" class="col-sm-2 control-label">Comment</label>
+        <div class="col-sm-10"><textarea name="comment" id="inputComment" class="form-control"></textarea>
+        </div>
+    </div>
+    <div class="form-group pull-right " style="margin-right: 1.7em;">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-primary" class="form-control">Submit Comment</button>
+        </div>
+    </div>
+</form>
+<div class="clearfix"></div>
+<script>
+    $(function () {
+        $("#comment-form").submit(function () {
+            var data = $(this).serialize();
+            $.post($(this).attr('action'), data, function (response) {
+                $("#comments").prepend(response.html);
+                $(':input', '#comment-form')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .prop('checked', false)
+                    .prop('selected', false);
+            })
+            return false;
+        })
+    })
+</script>

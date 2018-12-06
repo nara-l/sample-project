@@ -1,22 +1,29 @@
+{% load static %}
+{% load quotes %}
 <div class="ticker-row">
     <div>
-        <h3>Apple {{forloop.counter}}</h3>
+        <span class="image-wrap">
+        <a href="{{quote.Website}}" target="_blank">
+            <img src="{% static 'images/' %}{{quote.Symbol|load_image}}" class="img-responsive" alt="">
+        </a>
+    </span>
+        <h3>{{quote.CompanyName}} {{forloop.counter}}</h3>
         <h4>
             <span class="ticker">
-                <a title="Apple Stock Quote" href="#">
-                    NASDAQ:<span class="symbol">AAPL</span>
+                <a title="{{quote.CompanyName}} Quote" href="{{quote.Website}}">
+                    {{quote.ExchangeName}}:<span class="symbol">{{quote.Symbol}}</span>
                 </a>
             </span>
         </h4>
         <aside class="price-quote-container">
             <h4 class="current-price">
-                $170.15
+                ${{quote.CurrentPrice.Amount}}
             </h4>
             <h4 class="price-change-amount price-neg">
-                $0.95
+                ${{ quote.Change.Amount}}
             </h4>
             <h4 class="price-change-percent price-neg">
-                (-0.56%)
+                ({{ quote.PercentChange.Value|floatformat:2}}%)
             </h4>
         </aside>
     </div>

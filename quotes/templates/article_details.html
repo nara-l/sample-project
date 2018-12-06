@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block title %} {{title}} {% endblock %}
-{% load replace_str %}
+{% load quotes %}
 {% block body %}
 
 {% include "parts/nav.html" %}
- {% autoescape off %}
+{% autoescape off %}
 <div class="container article-content-inner">
     <div class="row">
         <div class="col-sm-12">
@@ -34,20 +34,23 @@
             </div>
             <section class="article-body">
                 <div class="article-content">
-
                     {{ article.body|replace_sfr}}
-
                 </div>
                 <div class="article-disclosure">
                     {{ article.disclosure}}
                 </div>
-                <div id="comments">
-                    {% for comment in comments %}
-                    {% include "parts/comment.html" %}
-                    {% endfor %}
-                </div>
-                <div>
-                    {% include 'parts/comment_form.html' %}
+                <div class="special-message">
+                    <h4>Add Comments below</h4>
+                    <div class="clearfix"> &nbsp;</div>
+                    <div>
+                        {% include 'parts/comment_form.html' %}
+                    </div>
+                    <div class="clearfix"> &nbsp;</div>
+                    <div id="comments">
+                        {% for comment in comments %}
+                        {% include "parts/comment.html" %}
+                        {% endfor %}
+                    </div>
                 </div>
             </section>
         </main>
@@ -57,9 +60,17 @@
                     <hr>
                     <h2>Stocks</h2>
                 </div>
+                <span id="ticker-rows">
                 {% for quote in quotes %}
                 {% include "parts/ticket_row.html" %}
                 {% endfor %}
+            </span>
+                <div class="text-center">
+                    <button type="button" class="btn btn-sm" aria-label="Left Align" id="refresh-quotes">
+                        <span class="glyphicon glyphicon-refresh " aria-hidden="true"></span> Refresh Quotes
+                    </button>
+                </div>
+
             </section>
             <section class="read-more-section">
                 <div class="block-title">
@@ -68,13 +79,18 @@
                 </div>
                 <ul class="two-line-list">
                     {% for related_article in related_articles %}
-                    <li><a href="{% url 'article_detail' slug=related_article.slug %}">{{related_article.headline}}</a></li>
+                    <li><a href="{% url 'article_detail' slug=related_article.slug %}">{{related_article.headline}}</a>
+                    </li>
                     {% endfor %}
                 </ul>
             </section>
         </aside>
     </div>
 </div>
-  {% endautoescape %}
+<script>
+
+
+</script>
+{% endautoescape %}
 {{ content}}
 {% endblock %}

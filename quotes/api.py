@@ -11,9 +11,9 @@ from django.utils.text import slugify
 class DataAPI():
 
     def content_api(self):
-            with open(os.path.join(settings.PROJECT_ROOT, 'content_src/content_api.json'), 'r') as jsonfile:
-                response = json.load(jsonfile)
-                return response
+        with open(os.path.join(settings.PROJECT_ROOT, 'content_src/content_api.json'), 'r') as jsonfile:
+            response = json.load(jsonfile)
+            return response
 
     def quotes_api(self):
         with open(os.path.join(settings.PROJECT_ROOT, 'content_src/quotes_api.json'), 'r') as jsonfile:
@@ -21,7 +21,7 @@ class DataAPI():
             return response
 
     def normalize_article(self, res):
-        article = {}
+        article = dict()
         article['image'] = res['images'][0]['image']
         article['image_name'] = res['images'][0]['name']
         article['body'] = res['body']
@@ -36,11 +36,11 @@ class DataAPI():
         return article
 
     def get_article_with_tag(self, slug):
-        response = self.content_api()
-        for res in response['results']:
+        items = self.content_api()
+        for item in items['results']:
 
-            if self.has_tag(res, slug):
-                return self.normalize_article(res)
+            if self.has_tag(item, slug):
+                return self.normalize_article(item)
         return None
 
     def get_article_by_slug(self, slug):
@@ -63,8 +63,3 @@ class DataAPI():
             if not_in_items:
                 items.append(self.normalize_article(chosen))
         return items
-
-
-
-
-
