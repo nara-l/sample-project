@@ -9,3 +9,6 @@ class Comments(models.Model):
     comment = models.TextField()
     slug = models.SlugField(max_length=100)
     created_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '{username} commented on {slug}'.format(username=self.username, slug=self.slug)
