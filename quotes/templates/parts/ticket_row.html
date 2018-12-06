@@ -7,10 +7,10 @@
             <img src="{% static 'images/' %}{{quote.Symbol|load_image}}" class="img-responsive" alt="">
         </a>
     </span>
-        <h3>{{quote.CompanyName}} {{forloop.counter}}</h3>
+        <h3>{{quote.CompanyName}}</h3>
         <h4>
             <span class="ticker">
-                <a title="{{quote.CompanyName}} Quote" href="{{quote.Website}}">
+                <a title="{{quote.CompanyName}} Quote" href="{{quote.Website}}" target="_blank">
                     {{quote.ExchangeName}}:<span class="symbol">{{quote.Symbol}}</span>
                 </a>
             </span>

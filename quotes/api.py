@@ -9,6 +9,14 @@ from django.utils.text import slugify
 
 
 class DataAPI():
+    """
+
+    This class reads our API, normalizes it, and contains methods to help us get stuff we need
+
+    Todo:
+        * Add tests
+        * Cleanly handle and log exceptions
+    """
 
     def content_api(self):
         with open(os.path.join(settings.PROJECT_ROOT, 'content_src/content_api.json'), 'r') as jsonfile:
@@ -20,6 +28,7 @@ class DataAPI():
             response = json.load(jsonfile)
             return response
 
+    # lets normalize the content json so we return only what we need
     def normalize_article(self, res):
         article = dict()
         article['image'] = res['images'][0]['image']
