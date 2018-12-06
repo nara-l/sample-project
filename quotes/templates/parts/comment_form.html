@@ -1,0 +1,20 @@
+    <form method="post" id="comment-form" action="{% url 'create_comment' slug=article.slug %}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{article.slug}}" name="slug"/>
+                        <input type="text" name="username"><textarea name="comment"></textarea>
+                        <button type="submit" class="btn btn-primary">Submit Comment</button>
+                    </form>
+                    <script>
+                        $(function () {
+                            $("#comment-form").submit(function () {
+                                debugger;
+
+                                var data = $(this).serialize();
+                                $.post($(this).attr('action'), data, function (response) {
+                                    console.log(response);
+                                    $("#comments").append(response.html);
+                                })
+                                return false;
+                            })
+                        })
+                    </script>

@@ -1,0 +1,21 @@
+{% load static %}
+<div class="card">
+    <div class="card-image">
+        <a href="article.html">
+            <img src="{{article.image}}" alt="{{article.image_name}}">
+        </a>
+    </div>
+    <div class="card-elements">
+        <div class="card-header">
+            <a href="{% url 'article_detail' slug=article.slug %}">
+                <h4>{{ article.headline }}</h4>
+            </a>
+            <p class="author">{{ article.author}} | {{article.published_date}} </p>
+        </div>
+        <div class="card-copy">
+            {% autoescape off %}
+            {{ article.body|striptags|truncatewords:100}}
+            {% endautoescape %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %} {{title}} {% endblock %}
+{% load replace_str %}
+{% block body %}
+
+{% include "parts/nav.html" %}
+ {% autoescape off %}
+<div class="container article-content-inner">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="article-header">
+                <header>
+                    <div id="adv_text" class="adv-heading"></div>
+                    <h1>{{article.headline}}</h1>
+                </header>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <main class="col-sm-7 col-md-8">
+            <div class="author-tagline author-inline">
+                <div class="author-and-date">
+                    <div class="author-byline">
+                        <div class="author-name">{{article.author}}</div>
+                        <div class="author-username">
+                        </div>
+                    </div>
+                    <div class="article-pub-date">
+                        <div class="publication-date">
+                            {{article.published_date}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <section class="article-body">
+                <div class="article-content">
+
+                    {{ article.body|replace_sfr}}
+
+                </div>
+                <div class="article-disclosure">
+                    {{ article.disclosure}}
+                </div>
+                <div id="comments">
+                    {% for comment in comments %}
+                    {% include "parts/comment.html" %}
+                    {% endfor %}
+                </div>
+                <div>
+                    {% include 'parts/comment_form.html' %}
+                </div>
+            </section>
+        </main>
+        <aside class="col-sm-5 col-md-4 p-l">
+            <section class="related-tickers">
+                <div class="block-title">
+                    <hr>
+                    <h2>Stocks</h2>
+                </div>
+                {% for quote in quotes %}
+                {% include "parts/ticket_row.html" %}
+                {% endfor %}
+            </section>
+            <section class="read-more-section">
+                <div class="block-title">
+                    <hr>
+                    <h2>Read More</h2>
+                </div>
+                <ul class="two-line-list">
+                    {% for related_article in related_articles %}
+                    <li><a href="{% url 'article_detail' slug=related_article.slug %}">{{related_article.headline}}</a></li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </aside>
+    </div>
+</div>
+  {% endautoescape %}
+{{ content}}
+{% endblock %}

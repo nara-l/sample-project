@@ -1,12 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Django Quotes app</title>
-</head>
-<body>
-    <h1>{{ title }}</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} {{ title}} {% endblock %}
+{% block body %}
+<main role="main">
+{% include "parts/nav.html" %}
+        <div class="container content-inner">
+            <div class="main-col">
+                <section class="jumbo-card card">
+                    <div class="card-image">
+                        <a href="{% url 'article_detail' slug=first_article.slug %}"><img src="{{first_article.image}}" alt="{{first_article.image_name}}" class="img-responsive"></a>
+                    </div>
+                    <div class="card-elements">
+                        <div class="card-header">
+                            <a href="{% url 'article_detail' slug=first_article.slug %}"><h3>{{first_article.headline}}</h3></a>
+                            <p class="author">{{first_article.author}}| {{first_article.published_date }}</p>
+                        </div>
+                        <div class="card-copy">
+                            {% autoescape off %}
+                            {{first_article.body|truncatewords:55}}
+                            {% endautoescape %}
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="cards row">
+                {% for article in random_articles %}
+                    {% include "parts/article_card.html" %}
+                {% endfor %}
+            </div>
+        </div>
+</main>
+{% endblock %}
+
