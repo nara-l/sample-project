@@ -17,7 +17,9 @@ To install dependencies, run migration,  and start your application on 127.0.0.1
 Site would be on: 127.0.0.1:80011
 
 Admin at: 127.0.0.1:80011/admin
-Super user:
-Admin
-Admin2018
+
+```
+Super user: Admin
+Password: Admin2018
+```
 
