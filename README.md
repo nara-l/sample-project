@@ -12,11 +12,11 @@ In your virtual environment, the project can be setup by running:
 ```
 $ ./up.sh
 ```
-To install dependencies, run migration, database included. Start your application on 127.0.0.1:80011.
+To install dependencies, run migration, database included. Start your application on 127.0.0.1:8011.
 
-Site would be on: 127.0.0.1:80011
+Site would be on: 127.0.0.1:8011
 
-Admin at: 127.0.0.1:80011/admin
+Admin at: 127.0.0.1:8011/admin
 
 ```
 Super user: Admin
